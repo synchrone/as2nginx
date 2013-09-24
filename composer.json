@@ -1,0 +1,12 @@
+{
+    "require": {
+        "symfony/console": "*",
+        "guzzle/guzzle": "*"
+    },
+    "autoload":{
+        "psr-0":{
+            "Ripe":"classes",
+            "Theon":"classes"
+        }
+    }
+}

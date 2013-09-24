@@ -1,0 +1,27 @@
+{
+    "name": "RipeStat",
+    "apiVersion": "1.0",
+    "baseUrl": "https://stat.ripe.net/data",
+    "operations": {
+        "GetAnnouncedPrefixes": {
+            "httpMethod": "GET",
+            "uri": "announced-prefixes/data.json",
+            "responseClass": "AnnouncedPrefixesData",
+            "parameters": {
+                "resource": {
+                    "description": "Specifies the AS number",
+                    "type": "integer",
+                    "location": "query"
+                }
+            }
+        }
+    },
+    "models": {
+        "AnnouncedPrefixesData": {
+            "type": "object",
+            "additionalProperties": {
+                "location": "json"
+            }
+        }
+    }
+}
