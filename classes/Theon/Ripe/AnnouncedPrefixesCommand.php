@@ -21,6 +21,7 @@ class AnnouncedPrefixesCommand extends Console\Command\Command
         $this->addOption('out', null, InputOption::VALUE_OPTIONAL, 'Output file');
         $this->addOption('pidfile', null, InputOption::VALUE_OPTIONAL, 'nginx pid-file', '/var/run/nginx.pid');
         $this->addOption('noreload', null, InputOption::VALUE_NONE, 'Do not reload nginx');
+        $this->addOption('noipv6', null, InputOption::VALUE_NONE, 'Omit IPv6 addresses');
     }
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
@@ -31,8 +32,25 @@ class AnnouncedPrefixesCommand extends Console\Command\Command
     protected function GetAnnouncedPrefixes($as)
     {
         $ripe = RipeClient::factory();
-        $prefixes = $ripe->GetAnnouncedPrefixes(array('resource' => $as));
+        $prefixes = $ripe->GetAnnouncedPrefixes(array('resource' => $as))->toArray();
+
+        if($this->input->getOption('noipv6'))
+        {
+            $prefixes = $this->FilterIPv6($prefixes);
+        }
+
         return $prefixes['data']['prefixes'];
+    }
+
+    private function FilterIPv6($prefixes)
+    {
+        $prefixes['data']['prefixes'] = array_filter($prefixes['data']['prefixes'],
+            function($n)
+            {
+                return strpos($n['prefix'], ':') === false;
+            });
+
+        return $prefixes;
     }
 
     protected function GetFileOutput()

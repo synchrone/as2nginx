@@ -8,7 +8,7 @@ use Guzzle\Service\Client as GuzzleClient;
  * Class Client
  * @package Ripe\Stat
  *
- * @method \Guzzle\Service\Command\CommandInterface GetAnnouncedPrefixes(array)
+ * @method \Guzzle\Service\Resource\Model GetAnnouncedPrefixes(array)
  */
 class Client extends GuzzleClient
 {
