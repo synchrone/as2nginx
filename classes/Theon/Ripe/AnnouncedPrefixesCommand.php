@@ -72,6 +72,7 @@ class AnnouncedPrefixesCommand extends Console\Command\Command
             throw new \Exception('Could not read nginx pid from '.$pidfile);
         }
 
+        defined('SIGHUP') or define('SIGHUP',1);
         if(!posix_kill($pid, SIGHUP)){
             throw new \Exception('Could not send SIGHUP to '.$pid);
         }
